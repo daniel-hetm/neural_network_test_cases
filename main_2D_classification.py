@@ -69,11 +69,17 @@ recorded_frames = []
 for yi in record_y:
     f = np.where(yi == np.amax(yi,axis=1,keepdims=True))[1]\
         .reshape(x_grid[0].shape)
-    recorded_frames.append(go.Frame(data=[go.Contour(x = x_steps,
-                                                     y = y_steps,
-                                                     z = f,
-                                                     colorscale = [[0, "rgba(55, 126, 184, 0.1)"],
-                                                                   [1, "rgba(255, 127, 0, 0.1)"]])]))
+    recorded_frames.append(go.Frame(data=[go.Contour(
+            x = x_steps,
+            y = y_steps,
+            z = f,
+            colorscale = [[0, "rgba(55, 126, 184, 0.1)"],
+                          [1, "rgba(255, 127, 0, 0.1)"]],
+            contours=dict(
+                start=0.5,
+                end=0.5,
+                size=1,
+        ),)]))
 
 moon_trace = go.Scatter(x=x[:,0], y=x[:,1],mode='markers',
                         marker=dict(size = 15, color=colors[y_raw.flatten()]))
